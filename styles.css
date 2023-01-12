@@ -1,0 +1,76 @@
+html {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  background: #C4C4C4;
+}
+
+.wrapper input {
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: 500px;
+}
+
+.suggestions {
+  position: absolute;
+  width: 500px;
+  padding: 0;
+  margin: 0 auto 0 0;
+  list-style-type: none;
+}
+
+.suggestions li {
+  background: #E3E3E3;
+  border: 2px solid #000000;
+  cursor: pointer;
+}
+
+.suggestions li:hover {
+  background: #65CDF9;;
+}
+
+.projects {
+  padding: 0;
+  margin: 32px auto 0 0;
+  list-style-type: none;
+}
+
+.github-project {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  padding: 8px 16px;
+  background: #E27BEB;
+  border: 1px solid #000000;
+}
+
+.github-project ul {
+  padding: 0;
+  margin: 0 auto 0 0;
+  list-style-type: none;
+}
+
+.github-project__close-button {
+  width: 42px;
+  height: 38px;
+  padding: 0;
+  margin: 0 16px 0;
+  background: no-repeat center url("img/Vector7.png"), no-repeat center url("img/Vector8.png");
+  cursor: pointer;
+}
