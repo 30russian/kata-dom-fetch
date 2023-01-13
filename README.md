@@ -1,0 +1,1 @@
+Ссылка на развёрнутое приложение - https://kata-dom-fetch.netlify.app/
