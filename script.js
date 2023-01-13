@@ -25,21 +25,26 @@ class Suggestions {
       this._suggestions = null;
     }
 
-    if (repos.length === 0) {
+    if (repos.length === 0 && searchField.value.length === 0) {
       return;
     }
 
     this._suggestions = document.createElement('ul');
     this._suggestions.classList.add('suggestions');
-    for (let i = 0; i < Math.min(repos.length, 5); i++) {
-      const repo = repos[i];
+    if(repos.length > 0 ) {
+      for (let i = 0; i < Math.min(repos.length, 5); i++) {
+        const repo = repos[i];
+        const li = document.createElement('li');
+        this._liRepoMap.set(li, repo);
+        li.textContent = repo.name;
+        this._suggestions.append(li);
+      }
+      this._suggestions.addEventListener('click', this._clickListener);
+    } else {
       const li = document.createElement('li');
-      this._liRepoMap.set(li, repo);
-      li.textContent = repo.name;
+      li.textContent = 'No matches found';
       this._suggestions.append(li);
     }
-    this._suggestions.addEventListener('click', this._clickListener);
-
     searchField.after(this._suggestions);
   }
 }
@@ -59,9 +64,9 @@ function addProject(project) {
 
   let liClone = projectLiTemplate.content.cloneNode(true);
   let lis = liClone.querySelectorAll('ul > li');
-  lis[0].textContent = project.name;
-  lis[1].textContent = project.owner.login;
-  lis[2].textContent = project.stargazers_count;
+  lis[0].textContent = `Name: ${project.name}`;
+  lis[1].textContent = `Owner: ${project.owner.login}`;
+  lis[2].textContent = `Stars: ${project.stargazers_count}`;
   projects.append(liClone);
 }
 
