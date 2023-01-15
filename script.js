@@ -4,48 +4,49 @@ const searchField = document.querySelector('input');
 const projects = document.querySelector('.projects');
 
 class Suggestions {
+  #liRepoMap;
+  #suggestions;
   constructor() {
-    this._liRepoMap = new Map();
-    this._suggestions = null;
-    this._clickListener = this.shouldAddProject.bind(this);
+    this.#liRepoMap = new Map();
+    this.#suggestions = null;
   }
 
-  shouldAddProject(event) {
-    if (this._liRepoMap.has(event.target)) {
-      addProject(this._liRepoMap.get(event.target));
+  shouldAddProject = (event) => {
+    if (this.#liRepoMap.has(event.target)) {
+      addProject(this.#liRepoMap.get(event.target));
       searchField.value = '';
       this.render([]);
     }
   }
 
-  render(repos) {
-    if (this._suggestions != null) {
-      this._suggestions.removeEventListener('click', this._clickListener);
-      this._suggestions.remove();
-      this._suggestions = null;
+  render = (repos) => {
+    if (this.#suggestions != null) {
+      this.#suggestions.removeEventListener('click', this.shouldAddProject);
+      this.#suggestions.remove();
+      this.#suggestions = null;
     }
 
     if (repos.length === 0 && searchField.value.length === 0) {
       return;
     }
 
-    this._suggestions = document.createElement('ul');
-    this._suggestions.classList.add('suggestions');
+    this.#suggestions = document.createElement('ul');
+    this.#suggestions.classList.add('suggestions');
     if(repos.length > 0 ) {
       for (let i = 0; i < Math.min(repos.length, 5); i++) {
         const repo = repos[i];
         const li = document.createElement('li');
-        this._liRepoMap.set(li, repo);
+        this.#liRepoMap.set(li, repo);
         li.textContent = repo.name;
-        this._suggestions.append(li);
+        this.#suggestions.append(li);
       }
-      this._suggestions.addEventListener('click', this._clickListener);
+      this.#suggestions.addEventListener('click', this.shouldAddProject);
     } else {
       const li = document.createElement('li');
       li.textContent = 'No matches found';
-      this._suggestions.append(li);
+      this.#suggestions.append(li);
     }
-    searchField.after(this._suggestions);
+    searchField.after(this.#suggestions);
   }
 }
 
@@ -92,7 +93,7 @@ const debouncedGetRepos = debounce(getRepos, 1000);
 const suggestions = new Suggestions();
 suggestions.render([]);
 searchField.addEventListener('input', function(event) {
-  debouncedGetRepos(this.value, suggestions.render.bind(suggestions));
+  debouncedGetRepos(this.value, suggestions.render);
 });
 
 projects.addEventListener('click', (event) => {
